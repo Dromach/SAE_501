@@ -1,0 +1,45 @@
+{% extends "layouts/front-end/base.njk" %}
+{% set page = 'Contact' %}
+{% block title %} {{Titre}} {{page}}  {% endblock %}
+
+{% block main %}
+
+    <form action="" data-async-form>
+    <div class="mb-6">
+        <label for="firstname" class="block font-bold mb-1">Prénom</label>
+        <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" data-error-message="firstname">Prénom requis</p>
+    </div>
+    <div class="mb-6">
+        <label for="lastname" class="block font-bold mb-1">Nom</label>
+        <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" date-error-message="lastname">Nom requis</p>
+    </div>
+    <div class="mb-6">
+        <label for="email" class="block font-bold mb-1">E-mail</label>
+        <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" date-error-message="email">E-mail requis</p>
+    </div>
+    <div class="mb-6">
+        <label for="content" class="block font-bold mb-1">Message</label>
+        <input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" date-error-message="content">Message requis</p>
+    </div>
+    <div>
+        <label for="identity">Identité</label>
+        {% for identity in identityEnum %}
+            <div>
+                <input
+                    type="radio"
+                    id="identity-{{ identity }}"
+                    name="identity"
+                    value="{{ identity }}"
+                />
+                <label for="identity-{{ identity }}">{{ identity }}</label>
+            </div>
+        {% endfor %}
+    </div>
+
+        <button type="submit">Envoyer</button>
+    </form>
+{% endblock %}
