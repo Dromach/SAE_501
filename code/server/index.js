@@ -232,6 +232,10 @@ app.use(`/admin${envVars.parsed?.ADMIN_SUFFIX || ""}`, breadcrumb, backendRouter
 app.use("/api", apiRouter);
 app.use(frontendRouter);
 
+app.use(function(req, res, next) {
+    res.status(404).send('Erreur 404, Veuillez nous excusez mais cette page n\'existe pas');
+});
+
 if (process.env.NODE_ENV === "development") {
     const options = {
         customSiteTitle: "Swagger SAE 501",
