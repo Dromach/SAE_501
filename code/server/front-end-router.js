@@ -57,4 +57,14 @@ router.get("/contact(.html)?", routeName("contact"), async (_req, res) => {
     res.render("pages/front-end/contact.njk", {});
 });
 
+//ajout de la page auteur dans le router
+router.get("/auteur(.html)?", routeName("auteur"), async (_req, res) => {
+    res.render("pages/front-end/auteur.njk", {});
+});
+
+//ajout de la page lieux dans le router
+router.get("/lieux(.html)?", routeName("lieux"), async (_req, res) => {
+    res.render("pages/front-end/lieux.njk", {});
+});
+
 export default router;
