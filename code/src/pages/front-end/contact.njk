@@ -1,10 +1,9 @@
 {% extends "layouts/front-end/base.njk" %}
 {% set page = 'Contact' %}
-{% block title %} {{Titre}} {{page}}  {% endblock %}
+{% block title %} {{Titre}} {{page}} {% endblock %}
 
 {% block main %}
-
-    <form action="" data-async-form>
+<form action="" data-async-form>
     <div class="mb-6">
         <label for="firstname" class="block font-bold mb-1">Prénom</label>
         <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2">
@@ -13,33 +12,104 @@
     <div class="mb-6">
         <label for="lastname" class="block font-bold mb-1">Nom</label>
         <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" date-error-message="lastname">Nom requis</p>
+        <p class="hidden text-red-500 text-sm" data-error-message="lastname">Nom requis</p>
     </div>
     <div class="mb-6">
         <label for="email" class="block font-bold mb-1">E-mail</label>
         <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" date-error-message="email">E-mail requis</p>
+        <p class="hidden text-red-500 text-sm" data-error-message="email">E-mail requis</p>
     </div>
     <div class="mb-6">
         <label for="content" class="block font-bold mb-1">Message</label>
         <input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" date-error-message="content">Message requis</p>
+        <p class="hidden text-red-500 text-sm" data-error-message="content">Message requis</p>
     </div>
     <div>
         <label for="identity">Identité</label>
         {% for identity in identityEnum %}
-            <div>
-                <input
-                    type="radio"
-                    id="identity-{{ identity }}"
-                    name="identity"
-                    value="{{ identity }}"
-                />
-                <label for="identity-{{ identity }}">{{ identity }}</label>
-            </div>
+        <div>
+            <input
+                type="radio"
+                id="identity-{{ identity }}"
+                name="identity"
+                value="{{ identity }}"
+            />
+            <label for="identity-{{ identity }}">{{ identity }}</label>
+        </div>
         {% endfor %}
     </div>
 
-        <button type="submit">Envoyer</button>
-    </form>
-{% endblock %}  
+    <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Envoyer</button>
+</form>
+
+<!-- Script pour gérer l'envoi asynchrone -->
+<script>
+    const submitForm = async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page
+
+        // Récupère les données du formulaire
+        const formData = new FormData(e.target);
+        const formValues = Object.fromEntries(formData);
+
+        // Validation simple côté client
+        let hasError = false;
+        if (!formValues.firstname || formValues.firstname.trim() === "") {
+            document.querySelector("[data-error-message='firstname']").classList.remove("hidden");
+            hasError = true;
+        } else {
+            document.querySelector("[data-error-message='firstname']").classList.add("hidden");
+        }
+
+        if (!formValues.lastname || formValues.lastname.trim() === "") {
+            document.querySelector("[data-error-message='lastname']").classList.remove("hidden");
+            hasError = true;
+        } else {
+            document.querySelector("[data-error-message='lastname']").classList.add("hidden");
+        }
+
+        if (!formValues.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
+            document.querySelector("[data-error-message='email']").classList.remove("hidden");
+            hasError = true;
+        } else {
+            document.querySelector("[data-error-message='email']").classList.add("hidden");
+        }
+
+        if (!formValues.content || formValues.content.trim() === "") {
+            document.querySelector("[data-error-message='content']").classList.remove("hidden");
+            hasError = true;
+        } else {
+            document.querySelector("[data-error-message='content']").classList.add("hidden");
+        }
+
+        if (hasError) {
+            return; // Si des erreurs existent, ne pas envoyer le formulaire
+        }
+
+        try {
+            // Envoi des données au backend
+            const response = await fetch("/api/messages", {
+                method: "POST",
+                body: JSON.stringify(formValues),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message); // Message de succès
+                e.target.reset(); // Réinitialise le formulaire
+            } else {
+                const errorData = await response.json();
+                alert("Erreur : " + errorData.error);
+            }
+        } catch (error) {
+            console.error("Erreur réseau :", error);
+            alert("Erreur réseau. Veuillez réessayer.");
+        }
+    };
+
+    // Ajouter l'événement de soumission au formulaire
+    document.querySelector("[data-async-form]").addEventListener("submit", submitForm);
+</script>
+{% endblock %}

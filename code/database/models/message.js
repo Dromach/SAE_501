@@ -29,4 +29,8 @@ const messageSchema = new Schema ({
     timestamps: { createdAt: "created_at" },
 });
 
+
+
+
 export default mongoose.model("Message", messageSchema);
+

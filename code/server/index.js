@@ -232,9 +232,6 @@ app.use(`/admin${envVars.parsed?.ADMIN_SUFFIX || ""}`, breadcrumb, backendRouter
 app.use("/api", apiRouter);
 app.use(frontendRouter);
 
-app.use(function(req, res, next) {
-    res.status(404).send('Erreur 404, Veuillez nous excusez mais cette page n\'existe pas');
-});
 
 if (process.env.NODE_ENV === "development") {
     const options = {
@@ -463,4 +460,9 @@ app.listen(port, listDomains, () => {
             }
             console.log(`\x1b[35m➜\x1b[0m  ${prefix}: \x1b[35mhttp://${item}:${port}/\x1b[0m`);
         });
+});
+
+
+app.use(function(req, res, next) {
+    res.status(404).send('Erreur 404, Veuillez nous excusez mais cette page n\'existe pas');
 });

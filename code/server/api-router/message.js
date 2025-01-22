@@ -14,7 +14,7 @@ router.post(`/${base}`, async (req, res) => {
     try{
         await ressource.save();
         res.status(201).json(ressource);
-    } catch (error) {
+    } catch (e) {
         res.status(400).json({
             errors: [...Object.values(e?.errors).map((item) => item.message)],
         });
@@ -39,7 +39,7 @@ router.get(`/${base}`, routeName("message_api"), async (req, res) => {
             page,
             query_params: querystring.stringify(queryParam),
         });
-    } catch {
+    } catch (e){
         res.status(400).json({
             errors: [
                 ...Object.values(
