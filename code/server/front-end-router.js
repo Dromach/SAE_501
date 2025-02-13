@@ -59,7 +59,7 @@ router.get("/contact(.html)?", routeName("contact"), async (_req, res) => {
 
 router.get("/sur-les-medias(.html)?", routeName("media"), async (_req, res) => {
     res.render("pages/front-end/media.njk", {});
-})
+});
 
 //ajout de la page auteur dans le router
 router.get("/auteur(.html)?", routeName("auteur"), async (_req, res) => {
