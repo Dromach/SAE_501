@@ -21,8 +21,8 @@ const messageSchema = new Schema ({
     },
     identity: {
         type: String,
-        enum: ['non_precise', 'autre', 'etudiant', 'parent'],
-        default: 'non_precise',
+        enum: ["non_precise", "autre", "etudiant", "parent"],
+        default: "non_precise",
     },
 },
 {

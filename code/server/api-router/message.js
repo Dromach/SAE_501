@@ -11,7 +11,7 @@ const base = "messages";
 router.post(`/${base}`, async (req, res) => {
     const ressource = new Message(req.body);
 
-    try{
+    try {
         await ressource.save();
         res.status(201).json(ressource);
     } catch (e) {
@@ -26,7 +26,7 @@ router.get(`/${base}`, routeName("message_api"), async (req, res) => {
         const listRessources = await Message.aggregate([
             { $sort: { _id: -1 } },
             { $skip: Math.max(page - 1, 0) * perPage },
-            { $limit: perPage }
+            { $limit: perPage },
         ]);
 
         const queryParam = { ...req.query };
@@ -39,11 +39,11 @@ router.get(`/${base}`, routeName("message_api"), async (req, res) => {
             page,
             query_params: querystring.stringify(queryParam),
         });
-    } catch (e){
+    } catch (e) {
         res.status(400).json({
             errors: [
                 ...Object.values(
-                    e?.errors || [{ message: e?.message || "Il y a eu un problème"}]
+                    e?.errors || [{ message: e?.message || "Il y a eu un problème" }]
                 ).map(val => val.message),
             ],
         });
@@ -51,8 +51,8 @@ router.get(`/${base}`, routeName("message_api"), async (req, res) => {
 });
 
 router.get(`/${base}`, async (req, res) => {
-    const identityEnum = ['Client', 'Admin', 'Guest']; // Exemple de tableau
-    res.render('contact.njk', { identityEnum });
+    const identityEnum = ["Client", "Admin", "Guest"]; // Exemple de tableau
+    res.render("contact.njk", { identityEnum });
 });
 
 export default router;

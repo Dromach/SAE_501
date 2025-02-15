@@ -8,15 +8,13 @@ const submitForm = (e) => {
 
     if (valdiator.isEmpty(formValues.lastname.trim())) {
         document.querySelector("[data-error-message='lastname']").classList.remove("hidden");
-    //display error message
-    return;
+        // display error message
+        return;
     };
-
-}
+};
 
 document.querySelectorAll("[data-async-form]").forEach((item) => {
-    item.addEventListener("submit", submitForm)
-
+    item.addEventListener("submit", submitForm);
 });
 
-//SERT A ANNULER LE RELOAD DE LA PAGE POUR LE FORMULAIRE 
+// SERT A ANNULER LE RELOAD DE LA PAGE POUR LE FORMULAIRE

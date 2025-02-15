@@ -259,7 +259,7 @@ if (process.env.NODE_ENV === "development") {
         next();
     });
 
-    const swaggerUi = await import("swagger-ui-express")
+    const swaggerUi = await import("swagger-ui-express");
     const swaggerSpec = await import("./swagger.js");
 
     app.use(["/swagger", "/api-docs"], swaggerUi.serve, swaggerUi.setup(swaggerSpec.default, options));
@@ -463,6 +463,6 @@ app.listen(port, listDomains, () => {
 });
 
 
-app.use(function(req, res, next) {
-    res.status(404).send('Erreur 404, Veuillez nous excusez mais cette page n\'existe pas');
+app.use(function (req, res, next) {
+    res.status(404).send("Erreur 404, Veuillez nous excusez mais cette page n'existe pas");
 });
