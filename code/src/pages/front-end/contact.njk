@@ -2,6 +2,7 @@
 {% set page = 'Contact' %}
 {% set bubble_color = "orange" %}
 {% block title %} {{Titre}} {{page}} {% endblock %}
+{% set identityEnum = ["Je ne souhaite pas le préciser", "Étudiant / Étudiant", "Parent", "Autre"] %}
 
 {% block main %}
 <form action="" data-async-form>
@@ -22,26 +23,34 @@
     </div>
     <div class="mb-6">
         <label for="content" class="block font-bold mb-1">Message</label>
-        <input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">
+        <!--<input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">-->
+        <textarea id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2"></textarea>
         <p class="hidden text-red-500 text-sm" data-error-message="content">Message requis</p>
     </div>
-    <div>
-        <label for="identity">Identité</label>
-        {% for identity in identityEnum %}
+    <div class="p-2">
+        <label for="identity" class="block font-bold mb-1 pb-2">Identité</label>
         <div>
-            <input
-                type="radio"
-                id="identity-{{ identity }}"
-                name="identity"
-                value="{{ identity }}"
-            />
-            <label for="identity-{{ identity }}">{{ identity }}</label>
+            {% for identity in identityEnum %}
+                <input
+                    type="radio"
+                    id="identity-{{ identity }}"
+                    name="identity"
+                    value="{{ identity }}"
+                />
+                <label for="identity-{{ identity }}">{{ identity }}</label>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-
-    <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Envoyer</button>
+    <div class="p-2">
+        <button type="submit" class="bg-blue-500 text-white font-bold p-2 rounded w-full">Envoyer</button>
+    </div>
 </form>
+
+<p class="font-bold">Nous contacter par courrier</p>
+<p>IUT de Cergy-Pontoise</p>
+<p>Département Métiers du Multimédia et de l'internet (MMI)</p>
+<p>34 bis Boulevard Henri Bergson</p>
+<p>95200 Sarcelles</p>
 
 <!-- Script pour gérer l'envoi asynchrone -->
 <script>
