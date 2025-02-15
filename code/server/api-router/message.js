@@ -8,7 +8,7 @@ import Message from "#models/message.js";
 const router = express.Router();
 const base = "messages";
 
-router.post(`/${base}`, async (req, res) => {
+router.post(`/${base}`, routeName("message_api"), async (req, res) => {
     const ressource = new Message(req.body);
 
     try {

@@ -27,7 +27,7 @@ router.get(`/${base}`, routeName("msg_list"), async (req, res) => {
 });
 
 // Nouveau : Endpoint POST pour créer un message
-router.post(`/api/${base}`, async (req, res) => {
+router.post(`/${base}`, routeName("messages_form"), async (req, res) => {
     try {
         // Crée une nouvelle instance de Message avec les données reçues
         const message = new Message(req.body);
