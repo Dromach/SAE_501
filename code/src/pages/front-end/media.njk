@@ -2,3 +2,26 @@
 {% set page = 'Sur les medias' %}
 {% set bubble_color = "rouge" %}
 {% block title %} {{Titre}} {{page}}  {% endblock %}
+
+{% block main %}
+    <p class="font-bold">Les actualités et les évènement importants du BUT et de l'IUT CY Paris Université dans les médias</p>
+    <div class="grid grid-cols-2 grid-rows-2 gap-4">
+        <div class="row-auto">
+            <P>La nouvelle réforme : le BUT MMI</p>
+            <iframe src="https://www.youtube.com/embed/oiEbQF7qfBU" title="Entretien avec Annadouré Roch, chef du département Métiers du multimédia et de l&#39;internet" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div>
+            <P>Pourquoi étudier à l'IUT CYU ?</p>
+            <iframe src="https://www.youtube.com/embed/SyjF4h2Zb7Q" title="Pourquoi étudier à l'IUT de Cergy-Pontoise ? (épisode 4)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div>
+            <P>Job interview en anglais au département MMI</p>
+            <iframe src="https://www.youtube.com/embed/t72pdxpNjyc" title="Job interview DUT MMI Cergy-Pontoise (MMI Sarcelles)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div>
+            <P>L'importance de l'IUT dans les études supérieures</p>
+            <iframe src="https://www.youtube.com/embed/xD4wshE0hEg" title="Les avantages d'un IUT pour des études supérieures" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+
+{% endblock %}
