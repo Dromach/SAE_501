@@ -3,35 +3,32 @@
 {% set bubble_color = "orange" %}
 {% block title %} {{Titre}} {{page}} {% endblock %}
 {% set identityEnum = ["Je ne souhaite pas le préciser", "Étudiant / Étudiant", "Parent", "Autre"] %}
-
-
+{% block scripts %}
+    <script src="/src/scripts/async-form.js" defer></script>
+{% endblock %}
 
 {% block main %}
 <h2 class="text-2xl font-bold pt-6">Plus d'infos sur la formation ? Contactez-nous !</h2>
 <p><span class="font-bold">La formation s'ouvre à tous les bacheliers,</span> pour rappel. Avoir des connaissances en programmation, design ou encore audiovisuel n'est pas obligatoire mais reste un bon atout, car il faut aimer la curiosité dans cette formation pluridisciplinaire. <span class="font-bold">Il est également possible de faire la formation après une reprise d'études ou une réorientation.</span></p>
 
 <h2 class="text-2xl font-bold pt-8 pb-4">Nous contacter en ligne</h2>
-<form action="" data-async-form>
+<form action="#" method="post" data-async-form>
     <div class="mb-6">
-        <label for="firstname" class="block font-bold mb-1">Prénom</label>
-        <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" data-error-message="firstname">Prénom requis</p>
+        <label for="firstname" class="block font-bold mb-1">Prénom *</label>
+        <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2" required>
     </div>
     <div class="mb-6">
-        <label for="lastname" class="block font-bold mb-1">Nom</label>
-        <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" data-error-message="lastname">Nom requis</p>
+        <label for="lastname" class="block font-bold mb-1">Nom *</label>
+        <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2" required>
     </div>
     <div class="mb-6">
-        <label for="email" class="block font-bold mb-1">E-mail</label>
-        <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2">
-        <p class="hidden text-red-500 text-sm" data-error-message="email">E-mail requis</p>
+        <label for="email" class="block font-bold mb-1">E-mail *</label>
+        <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2" required>
     </div>
     <div class="mb-6">
-        <label for="content" class="block font-bold mb-1">Message</label>
+        <label for="content" class="block font-bold mb-1">Message *</label>
         <!--<input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">-->
-        <textarea id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2"></textarea>
-        <p class="hidden text-red-500 text-sm" data-error-message="content">Message requis</p>
+        <textarea id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2" required></textarea>
     </div>
     <div class="p-2">
         <label for="identity" class="block font-bold mb-1 pb-2">Identité</label>
@@ -59,78 +56,4 @@
     <p>34 bis Boulevard Henri Bergson</p>
     <p>95200 Sarcelles</p>
 </div>
-{% endblock %}
-
-{% block scripts %}
-
-<!-- Script pour gérer l'envoi asynchrone -->
-<script>
-    const submitForm = async (e) => {
-        e.preventDefault(); // Empêche le rechargement de la page
-
-        // Récupère les données du formulaire
-        const formData = new FormData(e.target);
-        const formValues = Object.fromEntries(formData);
-
-        // Validation simple côté client
-        let hasError = false;
-        if (!formValues.firstname || formValues.firstname.trim() === "") {
-            document.querySelector("[data-error-message='firstname']").classList.remove("hidden");
-            hasError = true;
-        } else {
-            document.querySelector("[data-error-message='firstname']").classList.add("hidden");
-        }
-
-        if (!formValues.lastname || formValues.lastname.trim() === "") {
-            document.querySelector("[data-error-message='lastname']").classList.remove("hidden");
-            hasError = true;
-        } else {
-            document.querySelector("[data-error-message='lastname']").classList.add("hidden");
-        }
-
-        if (!formValues.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
-            document.querySelector("[data-error-message='email']").classList.remove("hidden");
-            hasError = true;
-        } else {
-            document.querySelector("[data-error-message='email']").classList.add("hidden");
-        }
-
-        if (!formValues.content || formValues.content.trim() === "") {
-            document.querySelector("[data-error-message='content']").classList.remove("hidden");
-            hasError = true;
-        } else {
-            document.querySelector("[data-error-message='content']").classList.add("hidden");
-        }
-
-        if (hasError) {
-            return; // Si des erreurs existent, ne pas envoyer le formulaire
-        }
-
-        try {
-            // Envoi des données au backend
-            const response = await fetch("/api/messages", {
-                method: "POST",
-                body: JSON.stringify(formValues),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                alert(result.message); // Message de succès
-                e.target.reset(); // Réinitialise le formulaire
-            } else {
-                const errorData = await response.json();
-                alert("Erreur : " + errorData.error);
-            }
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-            alert("Erreur réseau. Veuillez réessayer.");
-        }
-    };
-
-    // Ajouter l'événement de soumission au formulaire
-    document.querySelector("[data-async-form]").addEventListener("submit", submitForm);
-</script>
 {% endblock %}
