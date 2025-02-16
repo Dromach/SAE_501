@@ -29,7 +29,6 @@ const submitForm = async (e) => {
         return;
     };
 
-
     console.log("Formulaire soumis !");
     try {
         const response = await axios.post("http://localhost:3900/api/messages", formValues, {

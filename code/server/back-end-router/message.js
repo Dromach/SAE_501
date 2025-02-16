@@ -26,29 +26,17 @@ router.get(`/${base}`, routeName("msg_list"), async (req, res) => {
     });
 });
 
-router.post("/api/messages", async (req, res) => {
-    const { firstname, lastname, email, content, identity } = req.body;
 
-    // Validation simple
-    if (!firstname && !lastname && !email && !content) {
-        return res.status(400).json({ error: "Tous les champs sont requis !" });
-    }
-
-    // Créer un nouveau message avec les données reçues
-    const newMessage = new Message({
-        firstname,
-        lastname,
-        email,
-        content,
-        identity,
-    });
+router.post(`/${base}`, async (req, res) => {
+    const ressource = new Message(req.body);
 
     try {
-        // Sauvegarder le message dans MongoDB
-        await newMessage.save();
-        res.status(201).json({ message: "Message envoyé avec succès !" });
-    } catch (error) {
-        res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+        await ressource.save();
+        res.status(201).json(ressource);
+    } catch (e) {
+        res.status(400).json({
+            errors: [...Object.values(e?.errors).map((item) => item.message)],
+        });
     }
 });
 
