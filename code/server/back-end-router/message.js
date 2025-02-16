@@ -19,7 +19,9 @@ router.get(`/${base}`, routeName("msg_list"), async (req, res) => {
     let result = {};
     try {
         result = await axios(options);
-    } catch (_error) {}
+    } catch (_error) {
+        listErrors = error.response.data.errors;
+    }
 
     res.render("pages/back-end/messages/list_msg.njk", {
         list_messages: result.data,
@@ -27,7 +29,7 @@ router.get(`/${base}`, routeName("msg_list"), async (req, res) => {
 });
 
 
-router.post(`/${base}`, async (req, res) => {
+router.post(`/${base}`, routeName("messages_form"), async (req, res) => {
     const ressource = new Message(req.body);
 
     try {
