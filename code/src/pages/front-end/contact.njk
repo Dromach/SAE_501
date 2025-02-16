@@ -3,32 +3,33 @@
 {% set bubble_color = "orange" %}
 {% block title %} {{Titre}} {{page}} {% endblock %}
 {% set identityEnum = ["Je ne souhaite pas le préciser", "Étudiant / Étudiant", "Parent", "Autre"] %}
-{% block scripts %}
-    <script src="/src/scripts/async-form.js" defer></script>
-{% endblock %}
 
 {% block main %}
 <h2 class="text-2xl font-bold pt-6">Plus d'infos sur la formation ? Contactez-nous !</h2>
 <p><span class="font-bold">La formation s'ouvre à tous les bacheliers,</span> pour rappel. Avoir des connaissances en programmation, design ou encore audiovisuel n'est pas obligatoire mais reste un bon atout, car il faut aimer la curiosité dans cette formation pluridisciplinaire. <span class="font-bold">Il est également possible de faire la formation après une reprise d'études ou une réorientation.</span></p>
 
 <h2 class="text-2xl font-bold pt-8 pb-4">Nous contacter en ligne</h2>
-<form action="#" method="post" data-async-form>
+<form action="#" method="post" enctype="multipart/form-data" data-async-form>
     <div class="mb-6">
         <label for="firstname" class="block font-bold mb-1">Prénom *</label>
-        <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2" required>
+        <input type="text" id="firstname" name="firstname" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" data-error-message="firstname">Prénom requis</p>
     </div>
     <div class="mb-6">
         <label for="lastname" class="block font-bold mb-1">Nom *</label>
-        <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2" required>
+        <input type="text" id="lastname" name="lastname" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" data-error-message="lastname">Nom requis</p>
     </div>
     <div class="mb-6">
         <label for="email" class="block font-bold mb-1">E-mail *</label>
-        <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2" required>
+        <input type="text" id="email" name="email" class="rounded-lg w-full border border-gray-300 p-2">
+        <p class="hidden text-red-500 text-sm" data-error-message="email">E-mail requis</p>
     </div>
     <div class="mb-6">
         <label for="content" class="block font-bold mb-1">Message *</label>
         <!--<input type="text" id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2">-->
-        <textarea id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2" required></textarea>
+        <textarea id="content" name="content" class="rounded-lg w-full border border-gray-300 p-2"></textarea>
+        <p class="hidden text-red-500 text-sm" data-error-message="content">Message requis</p>
     </div>
     <div class="p-2">
         <label for="identity" class="block font-bold mb-1 pb-2">Identité</label>

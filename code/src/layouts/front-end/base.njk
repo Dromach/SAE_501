@@ -25,7 +25,9 @@
         {% endblock %}
 
         {% block styles %}{% endblock %}
-        {% block javascript %}{% endblock %}
+        {% block javascript %}
+            <script type="module" src="src/scripts/async-form.js" defer></script>
+        {% endblock %}
 
         {% if NODE_ENV == "development" %}
             <script type="module" src="/src/scripts/main.frontend.js" defer></script>
