@@ -27,6 +27,15 @@
         {% block styles %}{% endblock %}
         {% block javascript %}
             <script type="module" src="src/scripts/async-form.js" defer></script>
+            <script>
+                console.log("script chargé !");
+                window.addEventListener("load", function () {
+                    let savedLogo = localStorage.getItem("footerLogo");
+                    if (savedLogo) {
+                        document.getElementById("footer-logo").src = savedLogo; // Applique le logo sauvegardé
+                    }
+                });
+            </script>
         {% endblock %}
 
         {% if NODE_ENV == "development" %}
@@ -45,11 +54,13 @@
             {% block main %}{% endblock %}
             <footer class="border-y border-gray-400 text-center mx-6 my-3">
                 <div class="flex justify-center">
-                    <img src="/images/logo-cyu-couleur.svg" alt="Logo" class="pr-8">
+                    <div>
+                        <img src="/images/logo-cyu-couleur.svg" alt="Logo" id="footer-logo" class="pr-8">
+                    </div>
                     <div class="text-left">
-                        <p>| Certains texte sont issus de Wikipédia</p>
-                        <p>| <a href="https://fr-fr.facebook.com/CYCergyParisUniversite/">Facebook</a> <a href="https://twitter.com/universitecergy?lang=fr">Twitter</a> <a href="https://www.cyu.fr/">Université CY Paris Université</a> | <a href="#">Remonter</a></p>
-                        <p>| © 2013-2025 - BUT MMI - CY Paris Université - SAE 501</p>
+                        <p>Certains texte sont issus de Wikipédia</p>
+                        <p><a href="https://fr-fr.facebook.com/CYCergyParisUniversite/">Facebook</a> <a href="https://twitter.com/universitecergy?lang=fr">Twitter</a> <a href="https://www.cyu.fr/">Université CY Paris Université</a> | <a href="#">Remonter</a></p>
+                        <p>© 2013-2025 - BUT MMI - CY Paris Université - SAE 501</p>
                     </div>
                 </div>
             </footer>

@@ -21,7 +21,41 @@
         {% block head_tags %}{% endblock %}
 
         {% block styles %}{% endblock %}
-        {% block javascript %}{% endblock %}
+        {% block javascript %}
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    console.log("Script chargé !"); // Vérifie que le script s’exécute bien
+
+                    document.getElementById("logo-input").addEventListener("change", function (event) {
+                        let file = event.target.files[0]; 
+                        console.log("Fichier sélectionné :", file); // Vérifie si un fichier est bien sélectionné
+
+                        if (file) {
+                            let reader = new FileReader();
+                            
+                            reader.onload = function (e) {
+                                let logoUrl = e.target.result;
+                                console.log("Image convertie en base64 :", logoUrl); // Vérifie la conversion
+                                localStorage.setItem("footerLogo", logoUrl); // Stocke dans localStorage
+                                console.log("Image enregistrée dans localStorage !");
+                                alert("Logo mis à jour ! Rechargez la page du footer.");
+                            };
+                            
+                            reader.readAsDataURL(file); // Convertit l’image en base64
+                        } else {
+                            console.log("Aucun fichier sélectionné !");
+                        }
+                    });
+
+                    // Réinitialisation du logo
+                    document.getElementById("reset-logo").addEventListener("click", function () {
+                        localStorage.removeItem("footerLogo"); 
+                        console.log("Logo réinitialisé !");
+                        alert("Logo réinitialisé ! Rechargez la page du footer.");
+                    });
+                });
+            </script>
+        {% endblock %}
 
         {% if NODE_ENV == "development" %}
             <script type="module" src="/src/scripts/main.backend.js" defer></script>
@@ -43,6 +77,9 @@
                         <li class="px-1">Kerim KASIKCI</li>
                         <li class="px-1">Yann TAURON</li>
                     </ul>
+                    <h2>Changer le logo du footer</h2>
+                    <input type="file" id="logo-input" accept="image/*">
+                    <button id="reset-logo">Réinitialiser le logo</button>
                 </footer>
             </main>
         </div>
