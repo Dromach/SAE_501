@@ -4,12 +4,13 @@ import mongoose from "mongoose";
 import querystring from "querystring";
 
 import upload from "#server/uploader.js";
+import routeName from "#server/utils/name-route.middleware.js";
 
 const base = "authors";
 const router = express.Router();
 
 // Get multiple authors
-router.get(`/${base}`, async (req, res) => {
+router.get(`/${base}`, routeName("authors_list"), async (req, res) => {
     const queryParams = querystring.stringify({ per_page: 7, ...req.query });
     let options = {
         method: "GET",
@@ -26,7 +27,7 @@ router.get(`/${base}`, async (req, res) => {
 });
 
 // Get or create author
-router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
+router.get([`/${base}/:id`, `/${base}/add`], routeName("authors_form"), async (req, res) => {
     const options = {
         method: "GET",
         url: `${res.locals.base_url}/api/${base}/${req.params.id}`,
@@ -44,7 +45,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
         }
     }
 
-    res.render("/", {
+    res.render("pages/back-end/authors/add-edit.njk", {
         author: result?.data || {},
         list_errors: listErrors,
         is_edit: isEdit,
@@ -52,7 +53,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
 });
 
 // Create or update author
-router.post([`/${base}/:id`, `/${base}/add`], upload.single("image"), async (req, res) => {
+router.post([`/${base}/:id`, `/${base}/add`], routeName("authors_form"), upload.single("image"), async (req, res) => {
     let ressource = null;
     const isEdit = mongoose.Types.ObjectId.isValid(req.params.id);
     let listErrors = [];
@@ -87,8 +88,14 @@ router.post([`/${base}/:id`, `/${base}/add`], upload.single("image"), async (req
         listErrors = e.response.data.errors;
         ressource = e.response.data.ressource || {};
     } finally {
+        if (!listErrors.length) {
+            req.flash(
+                "success",
+                isEdit ? "Element mis à jour" : "Element crée"
+            );
+        }
         if (listErrors.length || isEdit) {
-            res.render("", {
+            res.render("pages/back-end/authors/add-edit.njk", {
                 author: ressource,
                 list_errors: listErrors,
                 is_edit: isEdit,
