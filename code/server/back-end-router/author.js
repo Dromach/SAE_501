@@ -5,7 +5,7 @@ import querystring from "querystring";
 
 import upload from "#server/uploader.js";
 
-const base = "auteurs";
+const base = "authors";
 const router = express.Router();
 
 // Get multiple authors

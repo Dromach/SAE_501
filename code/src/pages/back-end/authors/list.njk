@@ -1,5 +1,5 @@
 {% extends "layouts/back-end/base.njk" %}
-{% set active_menu_item = "auteurs" %}
+{% set active_menu_item = "authors" %}
 {% set using_asc = query_string_params.sorting == "asc" %}
 {% set sort_param = "desc" if using_asc == true else "asc" %}
 {% set sort_text = "Trier du plus récent au plus ancien" if using_asc == true else "Trier du plus ancien au plus récent" %}
@@ -13,7 +13,7 @@
             <div>
                 {% include "components/back-end/breadcrumb.njk" %}
                 <h2 class="text-4xl">
-                    Liste articles
+                    Liste auteurs
                 </h2>
                 <p class="text-sm">{{ list_articles.count }} éléments au total</p>
             </div>

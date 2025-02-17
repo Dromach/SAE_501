@@ -9,6 +9,7 @@ import parseManifest from "#server/utils/parse-manifest.js";
 import SAERouter from "./sae.js";
 import articleRouter from "./article.js";
 import messagesRouter from "./message.js";
+import auteurRouter from "./author.js";
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ router.use(async (_req, res, next) => {
 router.use(SAERouter);
 router.use(articleRouter);
 router.use(messagesRouter);
+router.use(auteurRouter);
 
 router.get("/", routeName("admin"), async (req, res) => {
     const queryParamsSAEs = querystring.stringify({ per_page: 5 });
@@ -53,6 +55,13 @@ router.get("/", routeName("admin"), async (req, res) => {
     };
     const listMessages = await axios(optionsMessages);
 
+    const queryParamsAuteurs = querystring.stringify({ per_page: 5 });
+    const optionsAuteurs = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/messages?${queryParamsAuteurs}`,
+    };
+    const listAuteurs = await axios(optionsAuteurs);
+
     res.render("pages/back-end/index.njk", {
         list_saes: {
             data: listSAEs.data.data,
@@ -65,6 +74,10 @@ router.get("/", routeName("admin"), async (req, res) => {
         list_messages: {
             data: listMessages.data.data,
             count: listMessages.data.count,
+        },
+        list_auteurs: {
+            data: listAuteurs.data.data,
+            count: listAuteurs.data.count,
         },
     });
 });
