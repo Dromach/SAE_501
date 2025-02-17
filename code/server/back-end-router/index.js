@@ -10,6 +10,7 @@ import SAERouter from "./sae.js";
 import articleRouter from "./article.js";
 import messagesRouter from "./message.js";
 import auteurRouter from "./author.js";
+import diversRouter from "./divers.js";
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ router.use(SAERouter);
 router.use(articleRouter);
 router.use(messagesRouter);
 router.use(auteurRouter);
+router.use(diversRouter);
 
 router.get("/", routeName("admin"), async (req, res) => {
     const queryParamsSAEs = querystring.stringify({ per_page: 5 });
@@ -58,9 +60,16 @@ router.get("/", routeName("admin"), async (req, res) => {
     const queryParamsAuteurs = querystring.stringify({ per_page: 5 });
     const optionsAuteurs = {
         method: "GET",
-        url: `${res.locals.base_url}/api/messages?${queryParamsAuteurs}`,
+        url: `${res.locals.base_url}/api/authors?${queryParamsAuteurs}`,
     };
     const listAuteurs = await axios(optionsAuteurs);
+
+    const queryParamsDivers = querystring.stringify({ per_page: 5 });
+    const optionsDivers = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/divers?${queryParamsDivers}`,
+    };
+    const listDivers = await axios(optionsDivers);
 
     res.render("pages/back-end/index.njk", {
         list_saes: {
@@ -78,6 +87,10 @@ router.get("/", routeName("admin"), async (req, res) => {
         list_auteurs: {
             data: listAuteurs.data.data,
             count: listAuteurs.data.count,
+        },
+        list_divers: {
+            data: listDivers.data.data,
+            count: listDivers.data.count,
         },
     });
 });

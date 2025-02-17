@@ -28,8 +28,7 @@ const submitForm = async (e) => {
         // display error message
         return;
     };
-
-    console.log("Formulaire soumis !");
+    
     try {
         const response = await axios.post("http://localhost:3900/api/messages", formValues, {
             headers: { "Content-Type": "application/json" },
