@@ -4,8 +4,6 @@ import querystring from "querystring";
 import routeName from "#server/utils/name-route.middleware.js";
 import Message from "#models/message.js";
 
-console.log("Script message chargé !");
-
 const base = "messages";
 const router = express.Router();
 
@@ -19,9 +17,7 @@ router.get(`/${base}`, routeName("msg_list"), async (req, res) => {
     let result = {};
     try {
         result = await axios(options);
-    } catch (_error) {
-        listErrors = error.response.data.errors;
-    }
+    } catch (_error) {}
 
     res.render("pages/back-end/messages/list_msg.njk", {
         list_messages: result.data,
