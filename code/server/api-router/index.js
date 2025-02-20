@@ -5,7 +5,7 @@ import ArticleRouter from "./article.js";
 import AuthorRouter from "./author.js";
 import ArticleCommentRouter from "./comment-article.js";
 import MessageRouter from "./message.js";
-// import DiversRouter from "./divers.js";
+import DiversRouter from "./divers.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -24,7 +24,7 @@ router.use(ArticleRouter);
 router.use(AuthorRouter);
 router.use(ArticleCommentRouter);
 router.use(MessageRouter);
-// router.use(DiversRouter);
+router.use(DiversRouter);
 router.all("*", (req, res) => {
     res.status(404).json({
         errors: [

@@ -64,13 +64,6 @@ router.get("/", routeName("admin"), async (req, res) => {
     };
     const listAuteurs = await axios(optionsAuteurs);
 
-    const queryParamsDivers = querystring.stringify({ per_page: 5 });
-    const optionsDivers = {
-        method: "GET",
-        url: `${res.locals.base_url}/api/divers?${queryParamsDivers}`,
-    };
-    const listDivers = await axios(optionsDivers);
-
     res.render("pages/back-end/index.njk", {
         list_saes: {
             data: listSAEs.data.data,
@@ -87,10 +80,6 @@ router.get("/", routeName("admin"), async (req, res) => {
         list_auteurs: {
             data: listAuteurs.data.data,
             count: listAuteurs.data.count,
-        },
-        list_divers: {
-            data: listDivers.data.data,
-            count: listDivers.data.count,
         },
     });
 });

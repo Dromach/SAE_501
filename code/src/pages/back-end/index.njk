@@ -2,6 +2,7 @@
 
 {% import "components/back-end/list-actions.njk" as list_actions %}
 {% import "pages/back-end/saes/table.njk" as saes with context %}
+{% import "pages/back-end/messages/table_msg.njk" as messages with context %}
 
 {% block main %}
     <div class="bg-white rounded-2xl mb-10 shadow-md pb-6">
@@ -102,5 +103,7 @@
                 Voir tout
             </a>
         </header>
+
+        {{ messages.table(list_messages)}}
     </div>
 {% endblock %}
