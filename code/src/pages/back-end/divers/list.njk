@@ -5,15 +5,68 @@
 {% import "components/back-end/pagination.njk" as pagination with context %}
 {% import "components/back-end/list-actions.njk" as list_actions %}
 
+{% block javascript %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Script chargé !");
+
+            let fileInput = document.getElementById("logo-input");
+            let uploadButton = document.getElementById("upload-logo");
+
+            uploadButton.addEventListener("click", function () {
+                fileInput.click(); // Déclenche l'input file
+            });
+
+            fileInput.addEventListener("change", function (event) {
+                let file = event.target.files[0]; 
+                console.log("Fichier sélectionné :", file);
+
+                if (file) {
+                    let reader = new FileReader();
+                            
+                    reader.onload = function (e) {
+                        let logoUrl = e.target.result;
+                        console.log("Image convertie en base64 :", logoUrl);
+                        localStorage.setItem("footerLogo", logoUrl);
+                        console.log("Image enregistrée dans localStorage !");
+                        alert("Logo mis à jour ! Rechargez la page du footer.");
+                    };
+                           
+                    reader.readAsDataURL(file);
+                } else {
+                    console.log("Aucun fichier sélectionné !");
+                }
+            });
+
+            // Réinitialisation du logo
+            document.getElementById("reset-logo").addEventListener("click", function () {
+                localStorage.removeItem("footerLogo"); 
+                console.log("Logo réinitialisé !");
+                alert("Logo réinitialisé ! Rechargez la page du footer.");
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block main %}
     <div class="bg-white rounded-2xl shadow-md pb-6">
         <header class="mb-1 p-6 flex justify-between gap-2 lg:flex-row flex-col">
             <div>
                 {% include "components/back-end/breadcrumb.njk" %}
-                <h2 class="text-4xl">
-                    Divers
-                </h2>
+                <h2 class="text-4xl">Divers</h2>
             </div>
         </header>
+        <div>
+            <h2 class="text-center text-lg font-bold mb-4">Changer le logo du footer</h2>
+            <div class="text-center">
+                <input type="file" id="logo-input" accept="image/*" hidden>
+                <button id="upload-logo" class="rounded-full bg-green-500 text-white px-4 py-2 hover:bg-green-600">
+                    Sélectionner un logo
+                </button>
+                <button id="reset-logo" class="rounded-full bg-red-500 text-white px-4 py-2 hover:bg-red-600">
+                    Réinitialiser le logo
+                </button>
+            </div>
+        </div>
     </div>
 {% endblock %}
