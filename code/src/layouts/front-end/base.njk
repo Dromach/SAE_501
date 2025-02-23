@@ -53,6 +53,9 @@
 
         <main class="max-w-[1200px] mx-auto @container/main">
             {% block main %}{% endblock %}
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
             <footer class="border-y border-gray-400 text-center mx-6 my-3">
                 <div class="flex justify-center">
                     <div>
@@ -68,3 +71,21 @@
         </main>
     </body>
 </html>
+
+
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const progressBar = document.querySelector(".progress-bar");
+
+        const updateProgress = () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+
+            progressBar.style.height = scrollProgress + "%";
+        };
+
+        updateProgress();
+        document.addEventListener("scroll", updateProgress);
+    });
+</script>
