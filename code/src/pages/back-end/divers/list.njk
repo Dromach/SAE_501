@@ -8,8 +8,6 @@
 {% block javascript %}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            console.log("Script chargé !");
-
             let fileInput = document.getElementById("logo-input");
             let uploadButton = document.getElementById("upload-logo");
 
@@ -45,7 +43,16 @@
                 alert("Logo réinitialisé ! Rechargez la page du footer.");
             });
         });
+
+        document.addEventListener("DOMContentLoaded",)
+                    console.log("Script chargé !");
+ 
     </script>
+
+
+
+
+
 {% endblock %}
 
 {% block main %}
@@ -69,10 +76,17 @@
             </div>
         </div>
         {# changement de théme #}
-      
+        <div>
+            <h2 class="text-center text-lg font-bold mb-4">Changer la couleur du thème</h2>
+            <div class="text-center">
+                <input type="file" id="logo-input" accept="image/*" hidden>
+                <button id="upload-logo" class="rounded-full bg-blue-500 text-white px-4 py-2 hover:bg-blue-600">
+                    Sélectionner un logo
+                </button>
+                
+            </div>
+        </div>
     
-
-
 
 
     </div>
