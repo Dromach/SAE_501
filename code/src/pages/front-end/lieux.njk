@@ -2,8 +2,10 @@
 {% set page = 'Lieux de vie' %}
 {% set bubble_color = "bleu" %}
 {% block title %} {{Titre}} {{page}}  {% endblock %}
-
 {% block main %}
+<div class="progress-container">
+     <div class="progress-bar"></div>
+ </div>
     <h2 class="text-2xl font-bold">Lieux de vie</h2>
     <p>Entre les cours, l'université et ses IUT proposent de nombreux lieux de convivialité ou d'idéation. Divers et variés, ils permettent aux étudiants, de toute formation, de découvrir de nouveaux horizons et surtout de rencontrer les étudiants d'autres BUT.</p>
     <div class="flex gap-8 py-8">
@@ -34,5 +36,22 @@
             <p>Intégré au centre d'appui aux enseignements, le réseau des fablabs de CY CErgy Paris Université comprend le fablabs LabBoite de Cergy (Grand centre) et le Faclab de Gennevilliers (site de l'université). Ce réseau permet d'expérimenter, tester et échanger dans des lieux collaboratifs, accueillants, et ouverts à toutes et tous.</p>
         </div>
     </div>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const progressBar = document.querySelector(".progress-bar");
+
+        const updateProgress = () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+
+            progressBar.style.height = scrollProgress + "%";
+        };
+
+        updateProgress();
+        document.addEventListener("scroll", updateProgress);
+    });
+</script>
 
 {% endblock %}
