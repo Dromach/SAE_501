@@ -44,40 +44,41 @@
             });
         });
 
-    document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".theme-btn");
-    const body = document.body;
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".theme-btn");
+            const body = document.body;
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+            const colorBG = document.getElementById("ColorBG");
 
-    const tailwindColors = {
-        "bg-blue-500": "#3b82f6",
-        "bg-red-500": "#ef4444",
-        "bg-green-500": "#10b981",
-        "bg-yellow-500": "#facc15",
-        "bg-purple-500": "#8b5cf6"
-    };
+            const tailwindColors = {
+                "from-blue-500": "#3b82f6",
+                "from-red-500": "#ef4444",
+                "from-green-500": "#10b981",
+                "from-yellow-500": "#facc15",
+                "from-purple-500": "#8b5cf6",
+            };
 
-    const savedTheme = localStorage.getItem("theme-color");
-    if (savedTheme) {
-        body.classList.add(savedTheme);
-        metaThemeColor.setAttribute("content", tailwindColors[savedTheme]);
-    }
+            const savedTheme = localStorage.getItem("theme-color");
+            if (savedTheme) {
+                body.classList.add(savedTheme);
+                metaThemeColor.setAttribute("content", tailwindColors[savedTheme]);
+            }
 
-    buttons.forEach(button => {
-        button.addEventListener("click", (event) => {
-        const selectedTheme = event.target.dataset.theme;
+            buttons.forEach(button => {
+                button.addEventListener("click", (event) => {
+                const selectedTheme = event.target.dataset.theme;
 
-        Object.keys(tailwindColors).forEach(color => {
-            body.classList.remove(color);
+                Object.keys(tailwindColors).forEach(color => {
+                    colorBG.classList.remove(color);
+                });
+
+                colorBG.classList.add(selectedTheme);
+                metaThemeColor.setAttribute("content", tailwindColors[selectedTheme]);
+
+                localStorage.setItem("theme-color", selectedTheme);
+                });
+            });
         });
-
-        body.classList.add(selectedTheme);
-        metaThemeColor.setAttribute("content", tailwindColors[selectedTheme]);
-
-        localStorage.setItem("theme-color", selectedTheme);
-        });
-    });
-    });
     </script>
 
 
