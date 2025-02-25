@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "degrade-rouge": "from-red-200 to-neutral-100",
         "degrade-vert": "from-green-200 to-neutral-100",
         "degrade-jaune": "from-yellow-200 to-neutral-100",
-        "degrade-violet": "from-purple-200 to-neutral-100"
+        "degrade-violet": "from-purple-200 to-neutral-100",
     };
 
     // Vérifie que l'élément colorBG existe avant d'ajouter des événements
@@ -49,6 +49,5 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // Simule un clic sur un bouton existant
         document.querySelector(`[data-theme="${randomTheme}"]`).click();
-    });
-    
+    });    
 });

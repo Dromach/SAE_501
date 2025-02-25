@@ -12,7 +12,7 @@
 
         <link rel="stylesheet" href="/styles/reset.css">
         <link rel="stylesheet" href="/styles/fonts.css">
-        <link href="/styles/progression.css" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/progression.css">
         <link rel="icon" type="image/jpg" href="/images/cy.jpg">
         {% if NODE_ENV != "development" %}
             <link rel="stylesheet" href="/{{ manifest['style.css'].file }}"/>
@@ -28,15 +28,7 @@
         {% block styles %}{% endblock %}
         {% block javascript %}
             <script type="module" src="src/scripts/async-form.js" defer></script>
-            <script>
-                console.log("script chargé !");
-                window.addEventListener("load", function () {
-                    let savedLogo = localStorage.getItem("footerLogo");
-                    if (savedLogo) {
-                        document.getElementById("footer-logo").src = savedLogo; // Applique le logo sauvegardé
-                    }
-                });
-            </script>
+            <script type="module" src="src/scripts/ChangeLogo.js" defer></script>
         {% endblock %}
 
         {% if NODE_ENV == "development" %}

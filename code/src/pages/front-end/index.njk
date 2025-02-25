@@ -6,6 +6,21 @@
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-x-6 gap-y-4 mb-6">
         <h1 class="text-3xl font-bold lg:col-span-2 mt-6 lg:mt-0">Articles sur le BUT MMI</h1>
         <ul class="flex md:flex-row sm:landscape:flex-col flex-col lg:flex-col gap-6">
+            {% for item in list_articles.data %}
+                <li>
+                    <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
+                        <div class="aspect-[25/14] overflow-hidden">
+                            <img class="object-cover h-full w-full" src="{{ 'images/default-sae-image.png' if item.image|length == 0 else '/uploads/' ~ item.image }}" alt="">
+                        </div>
+                        <section class="p-8 pb-11">
+                            <p class="text-2xl font-bold">{{ item.title }}</p>
+                            {% set content = item.content | striptags(true) | escape | nl2br %}
+                            <p>{{ item.content | striptags(true) | escape | nl2br }}</p>
+                            <p class="italic text-gray-600 mt-8 text-right">Par Helena Despoux</p>
+                        </section>
+                    </a>
+                </li>
+            {% endfor %}
             <li>
                 <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
                     <div class="aspect-[25/14] overflow-hidden">
