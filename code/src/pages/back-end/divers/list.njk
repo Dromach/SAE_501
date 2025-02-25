@@ -6,83 +6,8 @@
 {% import "components/back-end/list-actions.njk" as list_actions %}
 
 {% block javascript %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let fileInput = document.getElementById("logo-input");
-            let uploadButton = document.getElementById("upload-logo");
-
-            uploadButton.addEventListener("click", function () {
-                fileInput.click(); // Déclenche l'input file
-            });
-
-            fileInput.addEventListener("change", function (event) {
-                let file = event.target.files[0]; 
-                console.log("Fichier sélectionné :", file);
-
-                if (file) {
-                    let reader = new FileReader();
-                            
-                    reader.onload = function (e) {
-                        let logoUrl = e.target.result;
-                        console.log("Image convertie en base64 :", logoUrl);
-                        localStorage.setItem("footerLogo", logoUrl);
-                        console.log("Image enregistrée dans localStorage !");
-                        alert("Logo mis à jour ! Rechargez la page du footer.");
-                    };
-                           
-                    reader.readAsDataURL(file);
-                } else {
-                    console.log("Aucun fichier sélectionné !");
-                }
-            });
-
-            // Réinitialisation du logo
-            document.getElementById("reset-logo").addEventListener("click", function () {
-                localStorage.removeItem("footerLogo"); 
-                console.log("Logo réinitialisé !");
-                alert("Logo réinitialisé ! Rechargez la page du footer.");
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".theme-btn");
-            const body = document.body;
-            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-            const colorBG = document.getElementById("ColorBG");
-
-            const tailwindColors = {
-                "from-blue-500": "#3b82f6",
-                "from-red-500": "#ef4444",
-                "from-green-500": "#10b981",
-                "from-yellow-500": "#facc15",
-                "from-purple-500": "#8b5cf6",
-            };
-
-            const savedTheme = localStorage.getItem("theme-color");
-            if (savedTheme) {
-                body.classList.add(savedTheme);
-                metaThemeColor.setAttribute("content", tailwindColors[savedTheme]);
-            }
-
-            buttons.forEach(button => {
-                button.addEventListener("click", (event) => {
-                const selectedTheme = event.target.dataset.theme;
-
-                Object.keys(tailwindColors).forEach(color => {
-                    colorBG.classList.remove(color);
-                });
-
-                colorBG.classList.add(selectedTheme);
-                metaThemeColor.setAttribute("content", tailwindColors[selectedTheme]);
-
-                localStorage.setItem("theme-color", selectedTheme);
-                });
-            });
-        });
-    </script>
-
-
-
+    <script type="module" src="/src/scripts/back-end/ChangeColor.js" defer></script>
+    <script type="module" src="/src/scripts/back-end/ChangeLogo.js" defer></script>
 {% endblock %}
 
 {% block main %}
@@ -93,7 +18,7 @@
                 <h2 class="text-4xl">Divers</h2>
             </div>
         </header>
-        <div>
+        <div class="pb-4">
             <h2 class="text-center text-lg font-bold mb-4">Changer le logo du footer</h2>
             <div class="text-center">
                 <input type="file" id="logo-input" accept="image/*" hidden>
@@ -105,29 +30,24 @@
                 </button>
             </div>
         </div>
-
-
-        {# changement de théme #}
-        <div class="p-6 bg-white shadow-md rounded-lg">
-    <h2 class="text-center text-lg font-bold mb-4">Changer le thème de l'administration</h2>
-    
-    <div class="flex justify-center gap-4">
-        <button class="theme-btn bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600" data-theme="bg-blue-500">
-            Bleu
-        </button>
-        <button class="theme-btn bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600" data-theme="bg-red-500">
-            Rouge
-        </button>
-        <button class="theme-btn bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600" data-theme="bg-green-500">
-            Vert
-        </button>
-        <button class="theme-btn bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600" data-theme="bg-yellow-500">
-            Jaune
-        </button>
-        <button class="theme-btn bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-600" data-theme="bg-purple-500">
-            Violet
-        </button>
-    </div>
-</div>
+        <h2 class="text-center text-lg font-bold mb-4">Changer le thème de l'administration</h2>
+        <div class="flex justify-center gap-4">
+            <button class="theme-btn bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600" data-theme="degrade-bleu">
+                Bleu
+            </button>
+            <button class="theme-btn bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600" data-theme="degrade-rouge">
+                Rouge
+            </button>
+            <button class="theme-btn bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600" data-theme="degrade-vert">
+                Vert
+            </button>
+            <button class="theme-btn bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600" data-theme="degrade-jaune">
+                Jaune
+            </button>
+            <button class="theme-btn bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-600" data-theme="degrade-violet">
+                Violet
+            </button>
+            <button id="randomGradient" class="border-2 border-gray-500 px-4 py-2 rounded-full hover:border-gray-700 transition">Aléatoire</button>
+        </div>
     </div>
 {% endblock %}

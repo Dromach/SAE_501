@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" href="/styles/reset.css">
         <link rel="stylesheet" href="/styles/fonts.css">
+        <link rel="stylesheet" href="/styles/couleur.css">
         <link rel="icon" type="image/jpg" href="/images/cy2.jpg">
         {% if NODE_ENV != "development" %}
             <link rel="stylesheet" href="/{{ manifest['style.css'].file }}"/>
@@ -21,7 +22,9 @@
         {% block head_tags %}{% endblock %}
 
         {% block styles %}{% endblock %}
-        {% block javascript %}{% endblock %}
+        {% block javascript %}
+            {#<script type="module" src="/src/scripts/back-end/ChangeColor.js" defer></script>#}
+        {% endblock %}
 
         {% if NODE_ENV == "development" %}
             <script type="module" src="/src/scripts/main.backend.js" defer></script>
