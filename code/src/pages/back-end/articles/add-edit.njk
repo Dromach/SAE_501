@@ -8,13 +8,21 @@
     {% endif %}
 {% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="/css/tom-select.default.css">
+{% endblock %}
+
 {% block javascript %}
+    <script src="/js/tom-select.complete.js"></script>
     <script>
         function updateCount() {
             let textarea = document.getElementById("bio");
             let count = document.getElementById("charCount");
             count.textContent = textarea.maxLength - textarea.value.length;
         }
+
+        var settings = {};
+        new TomSelect('#auteur',settings);
     </script>
 {% endblock %}
 
@@ -80,7 +88,7 @@
 
                 <label class="block mb-4">
                     <span class="font-bold text-slate-700 after:ml-0.5 after:text-red-500">Auteur</span>
-                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="author" value="{{ article.author }}"/>
+                    <input id="auteur" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="author" value="{{ article.author }}"/>
                 </label>
 <!--
                 <label class="block mb-4">

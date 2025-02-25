@@ -29,6 +29,7 @@
         {% block javascript %}
             <script type="module" src="src/scripts/async-form.js" defer></script>
             <script type="module" src="src/scripts/ChangeLogo.js" defer></script>
+            <script type="module" src="src/scripts/ProgressBar.js" defer></script>
         {% endblock %}
 
         {% if NODE_ENV == "development" %}
@@ -63,21 +64,3 @@
         </main>
     </body>
 </html>
-
-
- <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const progressBar = document.querySelector(".progress-bar");
-
-        const updateProgress = () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollProgress = (scrollTop / scrollHeight) * 100;
-
-            progressBar.style.height = scrollProgress + "%";
-        };
-
-        updateProgress();
-        document.addEventListener("scroll", updateProgress);
-    });
-</script>
