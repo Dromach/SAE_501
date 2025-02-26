@@ -6,7 +6,7 @@
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-x-6 gap-y-4 mb-6">
         <h1 class="text-3xl font-bold lg:col-span-2 mt-6 lg:mt-0">Articles sur le BUT MMI</h1>
         <ul class="flex md:flex-row sm:landscape:flex-col flex-col lg:flex-col gap-6">
-            {% for item in list_articles.data %}
+            {# {% for item in list_articles.data %}
                 <li>
                     <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
                         <div class="aspect-[25/14] overflow-hidden">
@@ -21,31 +21,31 @@
                         </section>
                     </a>
                 </li>
-            {% endfor %}
-           <!-- <li>
-                <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
-                    <div class="aspect-[25/14] overflow-hidden">
-                        <img class="object-cover h-full w-full" src="/images/image-placeholder-article.png" alt="">
-                    </div>
-                    <section class="p-8 pb-11">
-                        <h2 class="text-2xl font-bold">Article 1</h2>
+            {% endfor %} #}
+        <li>
+            <a class="article-modal-trigger flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
+                <div class="aspect-[25/14] overflow-hidden">
+                    <img class="object-cover h-full w-full" src="/images/image-placeholder-article.png" alt="">
+                </div>
+                <section class="p-8 pb-11">
+                    <h2 class="text-2xl font-bold">Article 1</h2>
+                    <p>You have to give the section a height to limit it to cause the buttons to wrap, otherwise the flex element will just grow to fit the height of whatever's inside of it.</p>
+                    <p class="italic text-gray-600 mt-8 text-right">Par Helena Despoux</p>
+                </section>
+            </a>
+        </li>
+        <li>
+            <a class="article-modal-trigger flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
+                <div class="aspect-[25/14] overflow-hidden">
+                    <img class="object-cover h-full w-full" src="/images/image-placeholder-article.png" alt="">
+                </div>
+                <section class="p-8 pb-11">
+        <h2 class="text-2xl font-bold">Article 1</h2>
                         <p>You have to give the section a height to limit it to cause the buttons to wrap, otherwise the flex element will just grow to fit the height of whatever's inside of it.</p>
                         <p class="italic text-gray-600 mt-8 text-right">Par Helena Despoux</p>
                     </section>
                 </a>
             </li>
-            <li>
-                <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
-                    <div class="aspect-[25/14] overflow-hidden">
-                        <img class="object-cover h-full w-full" src="/images/image-placeholder-article.png" alt="">
-                    </div>
-                    <section class="p-8 pb-11">
-                        <h2 class="text-2xl font-bold">Article 2</h2>
-                        <p>You have to give the section a height to limit it to cause the buttons to wrap, otherwise the flex element will just grow to fit the height of whatever's inside of it.</p>
-                        <p class="italic text-gray-600 mt-8 text-right">Par Helena Despoux</p>
-                    </section>
-                </a>
-            </li>-->
         </ul>
         <a class="jpo-banniere rounded-lg overflow-hidden order-first lg:order-none" href="https://www.cyu.fr/formation/construire-son-projet/salons-journee-portes-ouvertes" title="Ouverture dans un nouvel onglet">
             <div class="logo">
@@ -62,4 +62,49 @@
             </section>
         </a>
     </section>
+   <!-- pop up -->
+<div id="article-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+  <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative">
+    <button id="modal-close" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-2xl">&times;</button>
+    
+    <h2 class="text-3xl font-bold mb-4">Titre de l'article</h2>
+    <p class="text-lg italic mb-4">Chapo de l'article</p>
+    <img src="/images/image-placeholder-article.png" alt="Image de l'article" class="w-full mb-4">
+    <p class="mb-4">
+      Contenu complet de l'article. Lorem ipsum dolor sit amet...
+    </p>
+    <div class="mb-4">
+      <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"></iframe>
+    </div>
+    <p class="text-right">
+      Auteur : <a href="/auteur/123" class="text-blue-500 hover:underline">Nom de l'auteur</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const articleLinks = document.querySelectorAll("a.article-modal-trigger");
+    const modal = document.getElementById("article-modal");
+    const modalClose = document.getElementById("modal-close");
+
+    articleLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.classList.remove("hidden");
+      });
+    });
+
+    modalClose.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+  });
+</script>
+
 {% endblock %}
