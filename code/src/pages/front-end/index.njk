@@ -16,7 +16,7 @@
                             <p class="text-2xl font-bold">{{ item.title }}</p>
                             {% set content = item.content | striptags(true) | escape | nl2br %}
                             <p>{{ item.content | striptags(true) | escape | nl2br }}</p>
-                            <p class="italic text-gray-600 mt-8 text-right">Par {{ item.author }}</p>
+                            <p class="italic text-gray-600 mt-8 text-right">Par {{ item.author.firstname }} {{ item.author.lastname }}</p>
                             <p class="italic text-gray-600 mt-8 text-right">Par Helena Despoux</p>
                         </section>
                     </a>

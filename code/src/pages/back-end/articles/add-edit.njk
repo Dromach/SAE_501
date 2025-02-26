@@ -13,28 +13,13 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="/js/tom-select.complete.js"></script>
+    <script type="module" src="/src/scripts/back-end/TomSelect.js" defer></script>
     <script>
         function updateCount() {
             let textarea = document.getElementById("bio");
             let count = document.getElementById("charCount");
             count.textContent = textarea.maxLength - textarea.value.length;
         }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            new TomSelect("#auteur", {
-            valueField: "_id",    // Utiliser l'ID de l'auteur
-            labelField: "lastname",   // Afficher le nom de l'auteur
-            searchField: "lastname",  // Recherche basée sur le nom
-            load: function (query, callback) {
-                fetch("/api/authors?q=" + encodeURIComponent(query))
-                .then(response => response.json())
-                .then(data => callback(data))
-                .catch(() => callback([]));
-            }
-            });
-        });
-
     </script>
 {% endblock %}
 
