@@ -1,9 +1,9 @@
 function loadEvents() {
-    fetch('src/data/dateJPO.json')
-        .then(response => response.json())  // Convertir la réponse en JSON
+    fetch("src/data/dateJPO.json")
+        .then(response => response.json()) // Convertir la réponse en JSON
         .then(data => {
             const eventsContainer = document.getElementById("JPO-container");
-            eventsContainer.innerHTML = '';  // Effacer le contenu précédent
+            eventsContainer.innerHTML = ""; // Effacer le contenu précédent
 
             // Afficher chaque événement
             data.dateJPO.forEach((event, index) => {
@@ -26,7 +26,7 @@ function loadEvents() {
 
 // Fonction pour éditer une date
 function editEvent(index) {
-    fetch('src/data/dateJPO.json')
+    fetch("src/data/dateJPO.json")
         .then(response => response.json())
         .then(data => {
             const event = data.dateJPO[index];
@@ -41,7 +41,7 @@ function editEvent(index) {
                 event.HeureFin = newHeureFin;
 
                 // Sauvegarder les nouvelles données dans le fichier JSON (simulation côté client)
-                localStorage.setItem('events', JSON.stringify(data)); // Utilisation de localStorage pour simuler une sauvegarde
+                localStorage.setItem("events", JSON.stringify(data)); // Utilisation de localStorage pour simuler une sauvegarde
 
                 loadEvents(); // Recharger les événements avec les nouvelles valeurs
             }

@@ -10,6 +10,23 @@
     </a>
 {% endmacro %}
 
+{% macro activer(link, is_active, label = 'Activer') %}
+    <button 
+        type="button" 
+        class="text-sm inline-flex w-fit justify-center gap-1 items-center grow toggle-status-button"
+        data-is-active="{{ is_active }}"
+        onclick="toggleStatus('{{ link }}', this)"
+    >
+        {% if is_active %}
+            Activé
+        {% else %}
+            Désactivé
+        {% endif %}
+    </button>
+{% endmacro %}
+
+
+
 {% macro delete(link, title, label = 'Supprimer') %}
     <button 
         type="button" 
