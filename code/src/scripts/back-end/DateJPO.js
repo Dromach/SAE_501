@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-// ✅ Fonction pour charger la date (utilisée sur la page publique)
+// Fonction pour charger la date
 function loadEvents() {
     const eventsContainer = document.getElementById("JPO-container");
 
@@ -9,7 +9,6 @@ function loadEvents() {
         return;
     }
 
-    console.log("✅ Chargement des événements...");
     axios.get("http://localhost:3900/api/dateJPO.json")
         .then(response => {
             const data = response.data;
@@ -33,7 +32,7 @@ function loadEvents() {
         });
 }
 
-// ✅ Fonction pour sauvegarder la nouvelle date (utilisée dans l'admin)
+// Fonction pour sauvegarder la nouvelle date
 function saveDate() {
     const newDate = document.getElementById("inputDate")?.value;  
 
@@ -51,7 +50,6 @@ function saveDate() {
 
                 axios.post("http://localhost:3900/api/dateJPO", data)
                     .then(() => {
-                        console.log("✅ Date modifiée avec succès.");
                         alert("✅ La date a été mise à jour !");
                     })
                     .catch(error => {
@@ -64,18 +62,10 @@ function saveDate() {
         });
 }
 
-// ✅ Exécuter loadEvents() SEULEMENT si on est sur la page affichant la date
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("✅ DOM chargé.");
-
+document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("JPO-container")) {
-        loadEvents();  // Page publique
-    }
-
-    if (document.getElementById("inputDate")) {
-        console.log("✅ Page Admin détectée.");
+        loadEvents(); // Page publique
     }
 });
 
-// ✅ Rendre `saveDate` accessible dans le panel admin
 window.saveDate = saveDate;

@@ -1,7 +1,5 @@
 import TomSelect from "tom-select";
 
-console.log("JS chargé !");
-
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.querySelector("#auteur");
 
@@ -29,8 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 searchField: "firstname",
                 create: false,
             });
-
-            console.log("TomSelect initialisé :", ts);
         })
         .catch(error => {
             console.error("Erreur lors de la récupération des auteurs :", error);

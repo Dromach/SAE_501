@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Sélectionne tous les boutons avec un attribut data-theme
     const buttons = document.querySelectorAll("[data-theme]");
     const colorBG = document.getElementById("ColorBG");
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("L'élément #ColorBG n'a pas été trouvé !");
     }
 
-    // Bouton "Aléatoire" pour choisir un dégradé au hasard
     document.getElementById("randomGradient").addEventListener("click", () => {
         const themes = Object.keys(tailwindColors);
         const randomTheme = themes[Math.floor(Math.random() * themes.length)];

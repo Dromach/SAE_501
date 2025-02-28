@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let uploadButton = document.getElementById("upload-logo");
 
     uploadButton.addEventListener("click", function () {
-        fileInput.click(); // Déclenche l'input file
+        fileInput.click();
     });
 
     fileInput.addEventListener("change", function (event) {
