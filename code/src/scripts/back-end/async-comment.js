@@ -1,20 +1,71 @@
-import express from "express";
-import Article from "#models/article.js";
+import axios from "axios";
+import validator from "validator";
 
-const router = express.Router();
+const submitCommentForm = async (e) => {
+    e.preventDefault();
 
-router.get("/article/:id", async (req, res) => {
-    try {
-        const article = await Article.findById(req.params.id);
-        if (!article) {
-            return res.status(404).send("Article non trouvé");
-        }
+    const formData = new FormData(e.target);
+    const formValues = Object.fromEntries(formData);
 
-        res.render("article.njk", { article });
-    } catch (error) {
-        console.error("Erreur lors de la récupération de l'article :", error);
-        res.status(500).send("Erreur serveur");
+    console.log("Comment form data:", formValues);
+
+    if (validator.isEmpty(formValues.content.trim())) {
+        document.querySelector("[data-error-message='comment']").classList.remove("hidden");
+        return;
     }
-});
 
-export default router;
+    if (formValues.nickname === "") {
+        formValues.nickname = "Anonyme";
+    }
+
+    try {
+        await axios.post(`${e.target.action}/comments`, formValues, {
+            headers: { "Content-Type": "application/json" },
+        });
+
+        document.querySelector("#flash-container").innerHTML = `
+            <p class="font-bold rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mt-3 mb-3">
+                Commentaire posté.
+            </p>
+        `;
+
+        document.querySelector("#async-comment-container").innerHTML += `
+            <hr>
+            <div class="my-3 relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+                <div class="relative flex gap-4">
+                    <div class="flex flex-col w-full">
+                        <p class="relative text-xl whitespace-nowrap truncate overflow-hidden font-bold">
+                            ${formValues.nickname}
+                        </p>
+                        <a class="text-gray-500 text-xl" href="#">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm">
+                    Il y a quelques secondes...
+                </p>
+                <p class="mt-4">
+                    ${formValues.content}
+                </p>
+            </div>
+        `;
+    } catch (error) {
+        const errors = error.response?.data?.errors || ["An error occurred"];
+        let errorHTML = "";
+
+        errors.forEach(item => {
+            errorHTML += `
+                <p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">
+                    ❌ ${item}
+                </p>
+            `;
+        });
+
+        document.querySelector("#flash-container").innerHTML = errorHTML;
+    }
+};
+
+document.querySelectorAll("[data-async-comment-form]").forEach((item) => {
+    item.addEventListener("submit", submitCommentForm);
+});

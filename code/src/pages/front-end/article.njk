@@ -1,8 +1,10 @@
+{% extends "layouts/front-end/base.njk" %}
 {% block main %}
 
 <article class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-    <div id="progress"></div>
 
+
+    <!-- Header de l'article -->
     <header class="mb-6 text-center">
         <h1 class="text-3xl font-bold text-gray-800">{{ article.title }}</h1>
         <p class="text-gray-600 mt-2">
@@ -17,6 +19,7 @@
         </p>
     </header>
 
+    <!-- Image de l'article si disponible -->
     {% if article.image %}
     <div class="mb-6">
         <img src="/uploads/{{ article.image }}" alt="Illustration de {{ article.title }}" 
@@ -24,16 +27,19 @@
     </div>
     {% endif %}
 
+    <!-- Abstract de l'article -->
     {% if article.abstract %}
     <section class="text-gray-700 font-semibold text-lg leading-relaxed">
         <p>{{ article.abstract }}</p>
     </section>
     {% endif %}
 
+    <!-- Contenu de l'article -->
     <section class="text-gray-700 leading-relaxed mt-6">
         <p>{{ article.content }}</p>
     </section>
 
+    <!-- Vidéo YouTube si disponible -->
     {% if article.yt_video_id %}
     <div class="mt-8">
         <iframe class="w-full h-64 md:h-96" 
@@ -45,27 +51,54 @@
 
 </article>
 
+<!-- Section des commentaires -->
 {% block commentaires_articles %}
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Commentaires</h2>
-
     <div id="flash-container" class="mt-3"></div>
 
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Commentaires</h2>
+
+    <div class="max-w-xl mx-auto">
+        <form action="#" method="post" class="async-comment-form bg-gray-100 p-6 rounded-lg">
+            <label for="nickname" class="text-gray-700 font-bold">Votre pseudonyme</label>
+            <p class="text-xs text-gray-600">Si vous ne remplissez pas, votre pseudonyme sera anonyme.</p>
+            <input type="text" name="nickname" id="nickname" 
+                   class="mt-2 w-full border border-gray-300 p-2 rounded-lg focus:outline-none">
+
+            <label for="content" class="block mt-2 text-gray-700 font-bold">Votre commentaire</label>
+            <textarea name="content" id="content" rows="5" 
+                      class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none"></textarea>
+
+            <button type="submit" class="w-full mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                Envoyer
+            </button>
+        </form>
+    </div>
+
+    <div id="async-comment-container"></div>
+
     <section>
-        <div class="max-w-xl mx-auto">
-            <form action="#" method="post" class="async-comment-form bg-gray-100 p-6 rounded-lg">
-                <label for="nickname" class="text-gray-700 font-bold">Votre pseudonyme</label>
-                <input type="text" name="nickname" id="nickname" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none mt-2"
-                       placeholder="Si vous ne remplissez pas, votre pseudonyme sera anonyme.">
-
-                <label for="content" class="block text-gray-700 font-bold mt-4">Votre commentaire</label>
-                <textarea name="content" id="content" cols="30" rows="5" 
-                          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none mt-2"></textarea>
-
-                <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600">
-                    Envoyer
-                </button>
-            </form>
+        {% for comment in comments.list_comments %}
+        <hr>
+        <div class="my-3 relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg text-xl"
+             style="font-size: 1.25rem; line-height: 1.75rem;">
+            <div class="relative flex gap-4">
+                <div class="flex flex-col w-full">
+                    <p class="relative whitespace-nowrap truncate overflow-hidden font-bold">
+                        {{ comment.nickname }}
+                    </p>
+                    <a class="text-gray-500 text-xl" href="#">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">
+                {{ comment.created_at | date("dd/LL/yyyy à HH:mm") }}
+            </p>
+            <p class="text-lg">
+                {{ comment.content }}
+            </p>
         </div>
+        {% endfor %}
     </section>
 {% endblock %}
 

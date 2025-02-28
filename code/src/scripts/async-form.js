@@ -34,7 +34,7 @@ const submitForm = async (e) => {
             headers: { "Content-Type": "application/json" },
         });
         e.target.reset();
-    } catch (error) {
+    } catch (error) { 
         console.error("❌ Erreur lors de l'envoi :", error.response ? error.response.data : error.message);
     }
 };
