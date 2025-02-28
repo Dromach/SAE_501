@@ -504,6 +504,29 @@ router.delete([`/${base}/:id([a-f0-9]{24})`, `/${base}/:slug([\\w\\d\\-]+\\-[a-f
     }
 });
 
+router.post(`/${base}/:id([a-f0-9]{24})`, routeName("actif_api"), async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Trouver l'article
+        let article = await Article.findById(id);
+        if (!article) {
+            return res.status(404).json({ error: "Article non trouvé" });
+        }
+
+        // Inverser l'état is_active
+        article.is_active = !article.is_active;
+
+        // Sauvegarder l'article
+        await article.save();
+
+        res.json({ isActive: article.is_active });
+    } catch (error) {
+        console.error("Erreur dans le serveur :", error); // Log des erreurs serveur
+        res.status(500).json({ error: "Erreur interne du serveur" });
+    }
+});
+
 const getArticles = async (id, queryParams) => {
     const computedQueryParams = {
         sorting: "desc",
