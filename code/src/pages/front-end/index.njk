@@ -8,7 +8,7 @@
         <ul class="flex md:flex-row sm:landscape:flex-col flex-col lg:flex-col gap-6">
             {% for item in list_articles.data %}
                 <li>
-                    <a class="article-modal-trigger flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="">
+                    <a class="article-modal-trigger flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="/article/{{ item._id }}">
                         <div class="aspect-[25/14] overflow-hidden">
                             <img class="object-cover h-full w-full" src="{{ 'images/default-sae-image.png' if item.image|length == 0 else '/uploads/' ~ item.image }}" alt="">
                         </div>
@@ -43,7 +43,8 @@
             <h2 class="text-3xl font-bold mb-4">Titre de l'article</h2>
             <p class="text-lg italic mb-4">Chapo de l'article</p>
             <img src="/images/image-placeholder-article.png" alt="Image de l'article" class="w-full mb-4">
-            <p class="mb-4">
+            <p class="mb-4">&
+
                 Contenu complet de l'article. Lorem ipsum dolor sit amet...
             </p>
             <div class="mb-4">

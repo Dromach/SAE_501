@@ -1,5 +1,6 @@
 {% extends "layouts/front-end/base.njk" %}
 {% block main %}
+<script src="/scripts/back-end/async-comment.js" defer></script>
 
 <article class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 
@@ -58,15 +59,13 @@
     <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Commentaires</h2>
 
     <div class="max-w-xl mx-auto">
-        <form action="#" method="post" class="async-comment-form bg-gray-100 p-6 rounded-lg">
+        <form action="#" method="post" class="bg-gray-100 p-6 rounded-lg" data-async-comment-form>
             <label for="nickname" class="text-gray-700 font-bold">Votre pseudonyme</label>
             <p class="text-xs text-gray-600">Si vous ne remplissez pas, votre pseudonyme sera anonyme.</p>
-            <input type="text" name="nickname" id="nickname" 
-                   class="mt-2 w-full border border-gray-300 p-2 rounded-lg focus:outline-none">
+            <input type="text" name="nickname" id="nickname" class="mt-2 w-full border border-gray-300 p-2 rounded-lg focus:outline-none">
 
             <label for="content" class="block mt-2 text-gray-700 font-bold">Votre commentaire</label>
-            <textarea name="content" id="content" rows="5" 
-                      class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none"></textarea>
+            <textarea name="content" id="content" rows="5" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none"></textarea>
 
             <button type="submit" class="w-full mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                 Envoyer

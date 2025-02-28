@@ -71,4 +71,29 @@ router.get("/lieux-de-vie(.html)?", routeName("lieux"), async (_req, res) => {
     res.render("pages/front-end/lieux.njk", {});
 });
 
+router.get("/article(.html)?/:id", routeName("article"), async (req, res) => {
+    const articleId = req.params.id;
+
+    // Vérifier si la base URL est bien définie
+    console.log("🔍 Base URL API :", res.locals.base_url); 
+
+    const apiUrl = `${res.locals.base_url}/api/articles/${articleId}`;
+
+    // Vérifier l'URL de la requête API
+    console.log("🔍 Requête API vers :", apiUrl);
+
+    try {
+        const response = await axios.get(apiUrl);
+        const article = response.data;
+
+        res.render("pages/front-end/article.njk", { article });
+    } catch (error) {
+        console.error("❌ Erreur API :", error.response?.status, error.message);
+
+        res.status(404).render("pages/errors/404.njk", {
+            message: "Article non trouvé",
+        });
+    }
+});
+
 export default router;
