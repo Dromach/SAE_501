@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Réinitialisation du logo
     document.getElementById("reset-logo").addEventListener("click", function () {
         localStorage.removeItem("footerLogo"); 
-        console.log("Logo réinitialisé !");
         alert("Logo réinitialisé ! Rechargez la page du footer.");
     });
 });
