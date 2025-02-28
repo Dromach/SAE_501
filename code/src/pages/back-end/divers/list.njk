@@ -6,8 +6,8 @@
 {% import "components/back-end/list-actions.njk" as list_actions %}
 
 {% block javascript %}
-    <script type="module" src="/src/scripts/back-end/ChangeColor.js" defer></script>
     <script type="module" src="/src/scripts/back-end/ChangeLogo.js" defer></script>
+    <script type="module" src="/src/scripts/back-end/DateJPO.js" defer></script>
 {% endblock %}
 
 {% block main %}
@@ -51,6 +51,12 @@
         </div>
         <div class="pt-4">
             <h2 class="text-center text-lg font-bold mb-4">Changer les dates des journées portes ouvertes</h2>
+            <div class="text-center mt-4">
+                <input type="text" id="inputDate" class="border p-2 rounded-md" placeholder="Entrez la nouvelle date (ex: 2025-02-28)">
+                <button onclick="saveDate()" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
+                    Modifier la date
+                </button>
+            </div>
         </div>
     </div>
 {% endblock %}
