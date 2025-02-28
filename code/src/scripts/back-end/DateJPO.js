@@ -1,68 +1,81 @@
 import axios from 'axios';
 
-console.log();
-
-// Fonction pour charger les événements
+// ✅ Fonction pour charger la date (utilisée sur la page publique)
 function loadEvents() {
-    axios.get("http://localhost:3900/dateJPO") // Récupère les événements
+    const eventsContainer = document.getElementById("JPO-container");
+
+    if (!eventsContainer) {
+        console.warn("⚠️ L'élément 'JPO-container' n'est pas sur cette page.");
+        return;
+    }
+
+    console.log("✅ Chargement des événements...");
+    axios.get("http://localhost:3900/api/dateJPO.json")
         .then(response => {
             const data = response.data;
-            const eventsContainer = document.getElementById("JPO-container");
             eventsContainer.innerHTML = ""; // Efface le contenu précédent
 
-            // Affiche chaque événement
-            data.dateJPO.forEach((event, index) => {
+            data.dateJPO.forEach((event) => {
                 const eventHTML = `
                     <div class="event-item">
                         <p class="text-4xl mb-3">
                             ${event.DateDebut}, <br>
-                            de ${event.HeureDebut} à ${event.HeureFin}
+                            de 09H à 17H
                         </p>
-                        <a class="en-savoir-plus" href="#" onclick="editEvent(${index})">EN SAVOIR PLUS</a>
+                        <a class="en-savoir-plus">EN SAVOIR PLUS</a>
                     </div>
                 `;
                 eventsContainer.innerHTML += eventHTML;
             });
         })
         .catch(error => {
-            console.error("Erreur lors du chargement des événements", error);
+            console.error("❌ Erreur lors du chargement des événements :", error);
         });
 }
 
-// Fonction pour éditer une date
-function editEvent(index) {
-    const newDate = document.getElementById("inputDate").value;  // Récupère la nouvelle date de l'input
+// ✅ Fonction pour sauvegarder la nouvelle date (utilisée dans l'admin)
+function saveDate() {
+    const newDate = document.getElementById("inputDate")?.value;  
 
     if (!newDate) {
-        alert("Veuillez entrer une nouvelle date.");
+        alert("❌ Veuillez entrer une nouvelle date.");
         return;
     }
 
-    axios.get("http://localhost:3900/dateJPO") // Récupère les événements du serveur
+    axios.get("http://localhost:3900/api/dateJPO.json")
         .then(response => {
             const data = response.data;
-            console.log("Données actuelles dans dateJPO.json:", data);
 
             if (data.dateJPO.length > 0) {
-                // Modifier la date de début de l'événement sélectionné
-                data.dateJPO[index].DateDebut = newDate;
-                console.log("Données envoyées au serveur:", data);
+                data.dateJPO[0].DateDebut = newDate;
 
-                // Envoie les données mises à jour au serveur
-                axios.post("http://localhost:3900/dateJPO", data)
+                axios.post("http://localhost:3900/api/dateJPO", data)
                     .then(() => {
-                        console.log("La modification a été effectuée avec succès.");
-                        loadEvents(); // Recharge les événements avec la nouvelle date
+                        console.log("✅ Date modifiée avec succès.");
+                        alert("✅ La date a été mise à jour !");
                     })
                     .catch(error => {
-                        console.error("Erreur lors de la sauvegarde", error);
+                        console.error("❌ Erreur lors de la sauvegarde :", error);
                     });
             }
         })
         .catch(error => {
-            console.error("Erreur lors de la récupération des données", error);
+            console.error("❌ Erreur lors de la récupération des données :", error);
         });
 }
 
-// Charger les événements au démarrage
-loadEvents();
+// ✅ Exécuter loadEvents() SEULEMENT si on est sur la page affichant la date
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("✅ DOM chargé.");
+
+    if (document.getElementById("JPO-container")) {
+        loadEvents();  // Page publique
+    }
+
+    if (document.getElementById("inputDate")) {
+        console.log("✅ Page Admin détectée.");
+    }
+});
+
+// ✅ Rendre `saveDate` accessible dans le panel admin
+window.saveDate = saveDate;
